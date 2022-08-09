@@ -86,6 +86,9 @@
 #define igt_assume(e) BUILD_BUG_ON_INVALID(e)
 #endif
 
+#ifdef __noreturn
+#undef __noreturn
+#endif
 #define __noreturn __attribute__((noreturn))
 #define __maybe_unused __attribute__((unused))
 

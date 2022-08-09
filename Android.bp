@@ -1,0 +1,160 @@
+package {
+    default_applicable_licenses: ["external_igt-gpu-tools_license"],
+}
+
+// Added automatically by a large-scale-change that took the approach of
+// 'apply every license found to every target'. While this makes sure we respect
+// every license restriction, it may not be entirely correct.
+//
+// e.g. GPL in an MIT project might only apply to the contrib/ directory.
+//
+// Please consider splitting the single license below into multiple licenses,
+// taking care not to lose any license_kind information, and overriding the
+// default license using the 'licenses: [...]' property on targets as needed.
+//
+// For unused files, consider creating a 'fileGroup' with "//visibility:private"
+// to attach the license to, and including a comment whether the files may be
+// used in the current project.
+// See: http://go/android-license-faq
+license {
+    name: "external_igt-gpu-tools_license",
+    visibility: [":__subpackages__"],
+    license_kinds: [
+        "SPDX-license-identifier-Apache-2.0",
+        "SPDX-license-identifier-GPL",
+        "SPDX-license-identifier-GPL-2.0",
+        "SPDX-license-identifier-ISC",
+        "SPDX-license-identifier-LGPL",
+        "SPDX-license-identifier-MIT",
+    ],
+    license_text: [
+        "COPYING",
+    ],
+}
+
+cc_defaults {
+    name: "igt-gpu-tools-defaults",
+    cflags: [
+        "-Wall",
+        "-Werror",
+        "-Wno-missing-field-initializers",
+        "-Wno-unused-parameter",
+        "-Wno-unused-variable",
+        "-Wno-shift-count-overflow",
+        "-Wno-implicit-function-declaration",
+        "-Wno-unused-function",
+        "-DHAVE_GETTID",
+        "-DHAVE_LIBGEN_H",
+        "-DHAVE_MEMFD_CREATE",
+    ],
+    static_libs: ["libelf", "libkmod", "libion", "liblog"],
+    shared_libs: ["libdrm", "libc"],
+    export_include_dirs: [
+		"lib",
+		"include",
+		"include/drm-uapi",
+        "prebuilt-intermediates",
+        "glib",
+		],
+    include_dirs: [
+        "external/android_external_libudev/include",
+	],
+    
+}
+
+cc_library_static {
+    name: "lib_igt_perf",
+    defaults: ["igt-gpu-tools-defaults"],
+	srcs: [
+		"lib/igt_perf.c",
+	],
+}
+cc_library_static {
+    name: "lib_glib",
+    defaults: ["igt-gpu-tools-defaults"],
+	srcs: [
+       "glib/ghash.c",
+       "glib/gatomic.c",
+       "glib/grefcount.c",
+       "glib/glist.c",
+       "glib/gnode.c",
+       "glib/gmem.c",
+       "glib/gslice.c",
+       "glib/gstrfuncs.c",
+	],
+}
+
+
+
+cc_library_static {
+    name: "lib_igt_device_scan",
+    defaults: ["igt-gpu-tools-defaults"],
+	srcs: [
+		"lib/igt_drm_fdinfo.c",
+		"lib/igt_device_scan.c",
+		"lib/igt_list.c",
+		"lib/igt_tools_stub.c",
+		"lib/intel_device_info.c",
+	],
+    static_libs: ["lib_glib"],
+}
+
+cc_test {
+    name: "intel_gpu_top",
+    defaults: ["igt-gpu-tools-defaults"],
+    srcs: ["tools/intel_gpu_top.c"],
+    static_libs: ["lib_igt_perf","lib_igt_device_scan", "lib_glib","libudev_static"],
+    shared_libs: [],
+}
+
+
+/*
+cc_test {
+    name: "gem_blt",
+    defaults: ["igt-gpu-tools-test-defaults"],
+    srcs: ["benchmarks/gem_blt.c"],
+    gtest: false,
+}
+
+cc_test {
+    name: "kms_flip",
+    defaults: ["igt-gpu-tools-test-defaults"],
+    srcs: ["tests/kms_flip.c"],
+    gtest: false,
+}
+
+cc_test {
+    name: "kms_atomic",
+    defaults: ["igt-gpu-tools-test-defaults"],
+    srcs: ["tests/kms_atomic.c"],
+    gtest: false,
+}
+
+cc_test {
+    name: "ion_fb",
+    defaults: ["igt-gpu-tools-test-defaults"],
+    srcs: ["tests/ion_fb.c"],
+    gtest: false,
+}
+
+cc_test {
+    name: "kms_vblank",
+    defaults: ["igt-gpu-tools-test-defaults"],
+    srcs: ["tests/kms_vblank.c"],
+    gtest: false,
+}
+
+cc_test {
+    name: "kms_throughput",
+    defaults: ["igt-gpu-tools-test-defaults"],
+    srcs: ["benchmarks/kms_throughput.c"],
+}
+
+cc_test {
+    name: "intel_gpu_top",
+    defaults: ["igt-gpu-tools-defaults"],
+    srcs: ["tools/intel_gpu_top.c"],
+    static_libs: ["igt-gpu-tools"],
+}
+*/
+

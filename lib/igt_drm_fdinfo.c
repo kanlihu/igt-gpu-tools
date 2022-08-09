@@ -35,6 +35,10 @@
 
 #include "igt_drm_fdinfo.h"
 
+#ifndef index
+#define index strchr
+#endif
+
 static size_t read_fdinfo(char *buf, const size_t sz, int at, const char *name)
 {
 	size_t count;

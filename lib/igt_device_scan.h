@@ -33,6 +33,10 @@
 #include <stdint.h>
 #include <stdio.h>
 #include <unistd.h>
+#include <string.h>
+
+#define index strchr
+#define rindex strrchr
 
 enum igt_devices_print_type {
 	IGT_PRINT_SIMPLE = 0,
