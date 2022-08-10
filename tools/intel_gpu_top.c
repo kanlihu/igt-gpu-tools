@@ -2594,7 +2594,9 @@ int main(int argc, char **argv)
 	}
 
 	pmu_sample(engines);
+#if 0
 	scan_clients(clients, false);
+#endif
 	codename = igt_device_get_pretty_name(&card, false);
 
 	while (!stop_top) {
@@ -2621,7 +2623,11 @@ int main(int argc, char **argv)
 		pmu_sample(engines);
 		t = (double)(engines->ts.cur - engines->ts.prev) / 1e9;
 
+#if 0
 		disp_clients = scan_clients(clients, true);
+#else
+		disp_clients = NULL;
+#endif
 
 		if (stop_top)
 			break;
@@ -2641,7 +2647,7 @@ int main(int argc, char **argv)
 			lines = print_imc(engines, t, lines, con_w, con_h);
 
 			lines = print_engines(engines, t, lines, con_w, con_h);
-
+#if 0
 			if (disp_clients) {
 				int class_w;
 
@@ -2667,12 +2673,15 @@ int main(int argc, char **argv)
 							     lines, con_w,
 							     con_h);
 			}
+#endif
 
 			pops->close_struct();
 		}
 
+#if 0
 		if (disp_clients != clients)
 			free_clients(disp_clients);
+#endif
 
 		if (stop_top)
 			break;
